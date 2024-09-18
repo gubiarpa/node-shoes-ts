@@ -34,8 +34,8 @@ app.get('/api/sells', (req, res) => {
 		{
 			id: 3,
 			product: 'Cross',
-			quantity: 1,
-			amount: 20.0,
+			quantity: 3,
+			amount: 60.0,
 			paymentMethod: 'Yape',
 		},
 		{
