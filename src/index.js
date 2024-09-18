@@ -20,7 +20,7 @@ mongoose
 	.catch((error) => console.error(error))
 
 // Ruta de ejemplo
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
 	res.send('¡Bienvenido a la API de Node JS!')
 })
 
@@ -31,12 +31,26 @@ app.get('/api/sells', async (_, res) => {
 		return res.status(200).json(sells)
 	} catch (error) {
 		console.error(error)
+		res.status(500).json({ error: 'Error when retrieving sells' })
 	}
 })
 
 // Ruta para crear un nuevo usuario
-app.post('/api/users', (req, res) => {
-	const newUser = req.body
+app.post('/api/sells', async (req, res) => {
+	const newSell = new Sell({
+		product: req.body.product,
+		quantity: req.body.quantity,
+		amount: req.body.amount,
+		paymentMethod: req.body.paymentMethod,
+	})
+
+	try {
+		const savedSell = await newSell.save()
+		return res.status(201).json({ newSell: savedSell })
+	} catch (error) {
+		res.status(500).json({ error: 'Error when creating new user' })
+	}
+
 	res.status(201).json({ message: 'Usuario creado', data: newUser })
 })
 
