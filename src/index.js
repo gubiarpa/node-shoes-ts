@@ -1,6 +1,11 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
+const appConfig = require('./config')
+
+const { Sell } = require('./schemas/Sell')
+
 const port = process.env.PORT || 3000
 
 // Middleware para permitir que el servidor interprete JSON
@@ -9,52 +14,24 @@ app.use(express.json())
 // Habilitar CORS para todas las rutas y orígenes
 app.use(cors())
 
+mongoose
+	.connect(appConfig.MONGODB_URI)
+	.then(() => console.log('Conectado a MongoDB con Mongoose'))
+	.catch((error) => console.error(error))
+
 // Ruta de ejemplo
 app.get('/', (req, res) => {
 	res.send('¡Bienvenido a la API de Node JS!')
 })
 
 // Ruta para obtener datos
-app.get('/api/sells', (req, res) => {
-	const users = [
-		{
-			id: 1,
-			product: 'Capellada',
-			quantity: 2,
-			amount: 25.0,
-			paymentMethod: 'Yape',
-		},
-		{
-			id: 2,
-			product: 'Pantuflas',
-			quantity: 1,
-			amount: 20.0,
-			paymentMethod: 'Cash',
-		},
-		{
-			id: 3,
-			product: 'Cross',
-			quantity: 3,
-			amount: 60.0,
-			paymentMethod: 'Yape',
-		},
-		{
-			id: 4,
-			product: 'Pantuflas',
-			quantity: 1,
-			amount: 20.0,
-			paymentMethod: 'Cash',
-		},
-		{
-			id: 5,
-			product: 'Capellada',
-			quantity: 1,
-			amount: 30.0,
-			paymentMethod: 'Cash',
-		},
-	]
-
-	res.json(users)
+app.get('/api/sells', async (_, res) => {
+	try {
+		const sells = await Sell.find()
+		return res.status(200).json(sells)
+	} catch (error) {
+		console.error(error)
+	}
 })
 
 // Ruta para crear un nuevo usuario
