@@ -5,6 +5,7 @@ const app = express()
 const appConfig = require('./config')
 
 const { Sell } = require('./schemas/Sell')
+const { Product } = require('./schemas/Product')
 
 const port = process.env.PORT || 3000
 
@@ -52,6 +53,16 @@ app.post('/api/sells', async (req, res) => {
 	}
 
 	res.status(201).json({ message: 'Usuario creado', data: newUser })
+})
+
+app.get('/api/products', async (_, res) => {
+	try {
+		const products = await Product.find()
+		return res.status(200).json(products)
+	} catch (error) {
+		console.error(error)
+		res.status(500).json({ error: 'Error when retrieving products' })
+	}
 })
 
 // Iniciar el servidor
