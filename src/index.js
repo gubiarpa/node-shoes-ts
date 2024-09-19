@@ -2,84 +2,29 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
-const appConfig = require('./config')
+const appConfig = require('./appConfig')
 
-const { Sell } = require('./schemas/Sell')
-const { Product } = require('./schemas/Product')
+const sellsRoute = require('./routes/sell.route')
+const productRoute = require('./routes/product.route')
 
-const port = process.env.PORT || 3000
+const port = appConfig.PORT
 
-// Middleware para permitir que el servidor interprete JSON
+// Allow JSON parsing for requests
 app.use(express.json())
 
-// Habilitar CORS para todas las rutas y orígenes
+// Enable CORS
 app.use(cors())
 
+// Connect to MongoDB
 mongoose
 	.connect(appConfig.MONGODB_URI)
 	.then(() => console.log('Conectado a MongoDB con Mongoose'))
 	.catch((error) => console.error(error))
 
-// Ruta de ejemplo
-app.get('/', (_, res) => {
-	res.send('¡Bienvenido a la API de Node JS!')
-})
+app.use('/api/sells', sellsRoute)
+app.use('/api/products', productRoute)
 
-// Ruta para obtener datos
-app.get('/api/sells', async (_, res) => {
-	try {
-		const sells = await Sell.find()
-		return res.status(200).json(sells)
-	} catch (error) {
-		console.error(error)
-		res.status(500).json({ error: 'Error when retrieving sells' })
-	}
-})
-
-// Ruta para crear un nuevo usuario
-app.post('/api/sells', async (req, res) => {
-	const newSell = new Sell({
-		product: req.body.product,
-		quantity: req.body.quantity,
-		amount: req.body.amount,
-		paymentMethod: req.body.paymentMethod,
-	})
-
-	try {
-		const savedSell = await newSell.save()
-		return res.status(201).json({ newSell: savedSell })
-	} catch (error) {
-		res.status(500).json({ error: 'Error when creating new user' })
-	}
-
-	res.status(201).json({ message: 'Usuario creado', data: newUser })
-})
-
-app.get('/api/products', async (_, res) => {
-	try {
-		const products = await Product.find()
-		return res.status(200).json(products)
-	} catch (error) {
-		console.error(error)
-		res.status(500).json({ error: 'Error when retrieving products' })
-	}
-})
-
-app.get('/api/products/:id', async (req, res) => {
-	try {
-		const { id } = req.params
-		const product = await Product.findById(id)
-		if (!product) {
-			return res.status(404).json({ message: 'Product not found' })
-		}
-		return res.status(200).json(product)
-	} catch (error) {
-		console.error(error)
-		res.status(500).json({ error: 'Error when retrieving products' })
-	}
-})
-
-// Iniciar el servidor
+// Start the server
 app.listen(port, () => {
 	console.log(`Servidor escuchando en http://localhost:${port}`)
 })
