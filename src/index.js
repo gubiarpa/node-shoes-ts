@@ -2,10 +2,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
-const appConfig = require('./appConfig')
+const appConfig = require('./app-config')
 
-const sellsRoute = require('./routes/sell.route')
+const sellRoute = require('./routes/sell.route')
 const productRoute = require('./routes/product.route')
+const paymentMethodRoute = require('./routes/payment-method.route')
 
 const port = appConfig.PORT
 
@@ -21,8 +22,9 @@ mongoose
 	.then(() => console.log('Conectado a MongoDB con Mongoose'))
 	.catch((error) => console.error(error))
 
-app.use('/api/sells', sellsRoute)
+app.use('/api/sells', sellRoute)
 app.use('/api/products', productRoute)
+app.use('/api/payment-methods', paymentMethodRoute)
 
 // Start the server
 app.listen(port, () => {
