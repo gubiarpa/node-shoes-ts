@@ -11,8 +11,9 @@ const port = appConfig.PORT
 // const paymentMethodRoute = require('./routes/payment-method.route.js')
 
 console.log('Starting server...')
-console.log(`Port: ${port}`)
-console.log(`AppFolder: ${__dirname}`)
+console.log('Port:', port)
+console.log('AppFolder', __dirname)
+console.log('Test Message:', appConfig.TEST_MESSAGE)
 
 // Allow JSON parsing for requests
 app.use(express.json())
