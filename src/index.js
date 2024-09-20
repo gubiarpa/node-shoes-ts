@@ -2,11 +2,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
-const appConfig = require('./app-config')
+const appConfig = require('./app-config.js')
 
-const sellRoute = require('./routes/sell.route')
-const productRoute = require('./routes/product.route')
-const paymentMethodRoute = require('./routes/payment-method.route')
+const sellRoute = require('./routes/sell.route.js')
+const productRoute = require('./routes/product.route.js')
+const paymentMethodRoute = require('./routes/payment-method.route.js')
 
 const port = appConfig.PORT
 

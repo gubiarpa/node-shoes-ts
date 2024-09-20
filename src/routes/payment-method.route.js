@@ -3,7 +3,7 @@ const router = express.Router()
 const {
 	getAllPaymentMethods,
 	getPaymentMethodById,
-} = require('../controllers/payment-method.controller')
+} = require('../controllers/payment-method.controller.js')
 
 router.get('/', getAllPaymentMethods)
 router.get('/:id', getPaymentMethodById)
