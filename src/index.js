@@ -7,7 +7,7 @@ const appConfig = require('./app-config.js')
 const port = appConfig.PORT
 
 // const sellRoute = require('./routes/sell.route.js')
-// const productRoute = require('./routes/product.route.js')
+const productRoute = require('./routes/product.route.js')
 // const paymentMethodRoute = require('./routes/payment-method.route.js')
 
 console.log('Starting server...')
