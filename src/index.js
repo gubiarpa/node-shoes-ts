@@ -22,6 +22,12 @@ mongoose
 	.then(() => console.log('Conectado a MongoDB con Mongoose'))
 	.catch((error) => console.error(error))
 
+/// Default route
+app.get('/', (_, res) => {
+	res.send('¡Bienvenido a la API de Node JS!')
+})
+
+/// Routes
 app.use('/api/sells', sellRoute)
 app.use('/api/products', productRoute)
 app.use('/api/payment-methods', paymentMethodRoute)
