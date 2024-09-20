@@ -1,4 +1,4 @@
-const asyncHandler = require('../middlewares/asyncHandler.js')
+const { asyncHandler } = require('../middlewares/asyncHandler.js')
 const { PaymentMethod } = require('../schemas/payment-method.js')
 
 const getAllPaymentMethods = asyncHandler(async (_, res) => {
