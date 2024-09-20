@@ -1,5 +1,5 @@
-const { asyncHandler } = require('../middlewares/asyncHandler.js')
-const { Product } = require('../schemas/product.js')
+const { asyncHandler } = require('../middlewares/asyncHandler')
+const { Product } = require('../schemas/product')
 
 const getAllProducts = asyncHandler(async (_, res) => {
 	const products = await Product.find()
