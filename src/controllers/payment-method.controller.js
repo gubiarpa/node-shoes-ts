@@ -1,5 +1,5 @@
 const { asyncHandler } = require('../middlewares/asyncHandler.js')
-const { PaymentMethod } = require('../schemas/payment-method.js')
+const { PaymentMethod } = require('../schemas/PaymentMethod.js')
 
 const getAllPaymentMethods = asyncHandler(async (_, res) => {
 	const paymentMethods = await PaymentMethod.find()
