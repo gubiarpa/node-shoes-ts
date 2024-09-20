@@ -9,4 +9,4 @@ const sellSchema = new mongoose.Schema({
 
 const Sell = mongoose.model('Sell', sellSchema)
 
-module.exports = { Sell }
+module.exports = Sell
