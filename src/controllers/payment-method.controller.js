@@ -8,6 +8,10 @@ const getAllPaymentMethods = asyncHandler(async (_, res) => {
 
 const getPaymentMethodById = asyncHandler(async (req, res) => {
 	const { id } = req.params
+	if (!id) {
+		return res.status(400).json({ message: 'Payment method id is required' })
+	}
+
 	const paymentMethod = await PaymentMethod.findById(id)
 	if (!paymentMethod) {
 		return res.status(404).json({ message: 'Payment method not found' })
