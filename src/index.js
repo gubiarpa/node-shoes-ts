@@ -1,4 +1,5 @@
 const express = require('express')
+const morgan = require('morgan')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const app = express()
@@ -9,6 +10,7 @@ const port = appConfig.PORT
 const sellRoute = require('./routes/sell.route.js')
 const productRoute = require('./routes/product.route.js')
 const paymentMethodRoute = require('./routes/payment-method.route.js')
+const delay = require('./utils/delay.js')
 
 console.log('Starting server...')
 console.log('Port:', port)
@@ -17,6 +19,9 @@ console.log('Test Message:', appConfig.TEST_MESSAGE)
 
 // Allow JSON parsing for requests
 app.use(express.json())
+
+// Morganize routes
+app.use(morgan('dev'))
 
 // Enable CORS
 app.use(cors())
@@ -30,6 +35,15 @@ mongoose
 /// Default route
 app.get('/', (_, res) => {
 	res.send('¡Bienvenido a la API de Node JS!')
+})
+
+/// Delay
+app.use(async (_req, _res, next) => {
+	if (appConfig.DELAY_OPERATIONS === 'ENABLED') {
+		await delay(appConfig.DELAY)
+	}
+
+	next()
 })
 
 /// Routes

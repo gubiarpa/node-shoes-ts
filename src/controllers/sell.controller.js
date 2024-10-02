@@ -8,16 +8,14 @@ const getAllSells = asyncHandler(async (_, res) => {
 
 const createSell = asyncHandler(async (req, res) => {
 	const newSell = new Sell({
-		product: req.body.product,
+		productId: req.body.productId,
 		quantity: req.body.quantity,
 		amount: req.body.amount,
-		paymentMethod: req.body.paymentMethod,
+		paymentMethodId: req.body.paymentMethodId,
 	})
 
 	const savedSell = await newSell.save()
 	return res.status(201).json({ newSell: savedSell })
-
-	res.status(201).json({ message: 'Usuario creado', data: newUser })
 })
 
 module.exports = {

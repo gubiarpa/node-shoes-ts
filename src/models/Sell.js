@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
 const sellSchema = new mongoose.Schema({
-	product: String,
+	productId: String,
 	quantity: Number,
 	amount: Number,
-	paymentMethod: String,
+	paymentMethodId: String,
 })
 
 const Sell = mongoose.model('Sell', sellSchema)
